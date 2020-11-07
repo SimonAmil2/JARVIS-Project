@@ -351,3 +351,6 @@ MigrationBackup/
 
 # Env var
 .env
+
+# Mac spec files
+.DS_Store
