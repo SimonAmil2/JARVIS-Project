@@ -354,3 +354,6 @@ MigrationBackup/
 
 # Mac spec files
 .DS_Store
+
+# Config
+config.json
