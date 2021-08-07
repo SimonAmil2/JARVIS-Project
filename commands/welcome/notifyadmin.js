@@ -10,6 +10,7 @@ module.exports.run = (client, message, args) => {
 module.exports.help = {
     aliases: ['notifyadmin, Notifyadmin'],
     args: false,
+    newuser : true,
     cooldown: 10,
     description: 'Notifier l\'admin',
     isUserAdmin: false,
