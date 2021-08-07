@@ -1,0 +1,19 @@
+{
+  "name": "discord_js_skeleton",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bot.js",
+    "dev": "nodemon ./bot.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.4.1",
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.12"
+  }
+}
