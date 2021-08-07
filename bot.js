@@ -19,6 +19,8 @@ client.on('message', (message) => {
     const args = message.content.slice(PREFIX.length).split(/ +/);  // Remove prefix and stack all args in arr / ex:  [user, bla, bla] 
     const commandName = args.shift().toLowerCase();                 // Get the command in a string / ex : user 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName));
+    const isAgent = !(message.member.roles.cache.size === 1);
+    const isAdmin = message.member.permissions.has('ADMINISTRATOR');
 
     // check if command exist
     if (!command) return;  
@@ -36,6 +38,13 @@ client.on('message', (message) => {
 
     // Check permissions
     if (command.help.permissions && !message.member.hasPermission('BAN_MEMBERS')) return message.reply("Tu n'as pas les permissions nécessaires!");
+
+    // Prevent useless command spam
+    if (command.help.newuser) {
+        if (isAgent && !isAdmin) {
+            return message.reply("Bruhh, ce n'est pas une commande pour toi");
+        }
+    }
 
     // Handle cooldowns
     if (!client.cooldowns.has(command.help.name)) {
