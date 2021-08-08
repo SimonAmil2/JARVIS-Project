@@ -10,7 +10,18 @@ const PREFIX = process.env.PREFIX;
 loadCommands(path.join(__dirname, 'commands'), client);                 // Loads commands
 
 client.on('ready', () => {
-    console.log(`${client.user.username} has logged in.`);
+    const botLoggedIn = `${client.user.username} has logged in.`
+    const channelBotLog = client.channels.cache.get('776102166842572840');
+    const allCommands = client.commands;
+    const allSelfCommands = allCommands.filter(cmd => cmd.help.selfcommand && !cmd.help.testcommand);
+
+    console.log(botLoggedIn);
+    //channelBotLog.send(botLoggedIn);
+    
+    // Self commands that need to be init
+
+    /*channelBotLog.send('Ces commandes ont besoin d\'être intialisées : ')
+    allSelfCommands.forEach(cmd => channelBotLog.send('$'+cmd.help.name));*/
 });
 
 client.on('message', (message) => {
@@ -21,15 +32,23 @@ client.on('message', (message) => {
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName));
     const isAgent = !(message.member.roles.cache.size === 1);
     const isAdmin = message.member.permissions.has('ADMINISTRATOR');
+    const wrongArgsSize = (command.help.args && (!args.length || (args.length <  command.help.argsSize)));
+    const noMentions = !(message.mentions.users.size || message.mentions.roles.size);
+    const needMentionedArgs = (command.help.mentionedArgs && noMentions);
 
     // check if command exist
-    if (!command) return;  
-    
+    if (!command) return;
+
     // Handle args
-    if (command.help.args && !args.length) {
+    if (wrongArgsSize || needMentionedArgs) {
         let noArgsReply = `Missings args ${message.author} !`;
         // In case of missing args
-        if (command.help.usage) noArgsReply += `\n>> \`${PREFIX}${command.help.name} ${command.help.usage}\``;
+        if (needMentionedArgs) {
+            if (command.help.usage) noArgsReply += `\n>> \`${PREFIX}${command.help.name} ${command.help.usage}\` with mentions`;  
+        }
+        else {
+            if (command.help.usage) noArgsReply += `\n>> \`${PREFIX}${command.help.name} ${command.help.usage}\``;
+        }
         return message.channel.send(noArgsReply);
     }
 
@@ -37,7 +56,7 @@ client.on('message', (message) => {
     if (command.help.isUserAdmin && message.guild.member(message.mentions.users.first()) && message.guild.member(message.mentions.users.first()).hasPermission('BAN_MEMBERS')) return message.reply("Tu n'as pas les permissions nécessaires pour lancer cette commande!");
 
     // Check permissions
-    if (command.help.permissions && !message.member.hasPermission('BAN_MEMBERS')) return message.reply("Tu n'as pas les permissions nécessaires!");
+    if (command.help.permissions && !isAdmin) return message.reply("Tu n'as pas les permissions nécessaires!");
 
     // Prevent useless command spam
     if (command.help.newuser) {

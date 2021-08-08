@@ -21,6 +21,7 @@ module.exports.run = (client, message, args) => {
 module.exports.help = {
     args: false,
     newuser : true,
+    selfcommand : true,
     cooldown: 10,
     description: 'Message de bienvenue',
     isUserAdmin: false,
