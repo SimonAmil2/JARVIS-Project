@@ -30,6 +30,9 @@ client.on('message', (message) => {
     const args = message.content.slice(PREFIX.length).split(/ +/);  // Remove prefix and stack all args in arr / ex:  [user, bla, bla] 
     const commandName = args.shift().toLowerCase();                 // Get the command in a string / ex : user 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName));
+    
+    if (!command) return;
+    
     const isAgent = !(message.member.roles.cache.size === 1);
     const isAdmin = message.member.permissions.has('ADMINISTRATOR');
     const wrongArgsSize = (command.help.args && (!args.length || (args.length <  command.help.argsSize)));
@@ -37,7 +40,7 @@ client.on('message', (message) => {
     const needMentionedArgs = (command.help.mentionedArgs && noMentions);
 
     // check if command exist
-    if (!command) return;
+    
 
     // Handle args
     if (wrongArgsSize || needMentionedArgs) {
