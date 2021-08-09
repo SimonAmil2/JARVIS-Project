@@ -37,7 +37,7 @@ client.on('message', (message) => {
     const isAgent = !(message.member.roles.cache.size === 1);
     const isAdmin = message.member.permissions.has('ADMINISTRATOR');
     const wrongArgsSize = (command.help.args && (!args.length || (args.length <  command.help.argsSize)));
-    const noMentions = !(message.mentions.users.size && message.mentions.roles.size);
+    const noMentions = !message.mentions.users.size && !message.mentions.roles.size;
     const needMentionedArgs = (command.help.mentionedArgs && noMentions);
 
     // Handle args
