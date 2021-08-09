@@ -17,7 +17,7 @@ module.exports.help = {
     argsSize : 2,
     description: 'Ajouter plusieurs rôles',
     args: true,
-    usage: '<role1> <role2> ...',
+    usage: '<@role1> <@role2> ... <@user>',
     cooldown: 10,
     permissions: true,
     isUserAdmin: false

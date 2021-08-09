@@ -10,12 +10,12 @@ module.exports.run = (client, message, args) => {
 module.exports.addRole = (message, mentionedRole, mentionedMember) => {
     if (mentionedMember && mentionedRole) {
         if (mentionedMember.roles.cache.has(mentionedRole.id)) {
-            return message.channel.send(`Vous avez déjà le rôle ${mentionedRole.name} ! Essayez de nouveau ...`);
+            return message.channel.send(`${mentionedMember} possède déjà le rôle ${mentionedRole} ! Essayez de nouveau ...`);
         }
         
         else {
             mentionedMember.roles.add(mentionedRole)
-            .then(user => message.channel.send(`${user}, vous possédez maintenant le rôle ${mentionedRole}`))
+            .then(user => message.channel.send(`${user} possède maintenant le rôle ${mentionedRole}`))
             .catch(err => console.log(err));
         }
     }

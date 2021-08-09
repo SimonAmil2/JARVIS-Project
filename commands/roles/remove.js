@@ -9,12 +9,12 @@ module.exports.run = (client, message, args) => {
 module.exports.removeRole = (message, mentionedRole, mentionedMember) => {
     if (mentionedMember && mentionedRole) {
         if (!mentionedMember.roles.cache.has(mentionedRole.id)) {
-            return message.channel.send(`Vous ne possédez pas le rôle ${mentionedRole.name} !`);
+            return message.channel.send(`${mentionedMember} ne posséde pas le rôle ${mentionedRole} !`);
         }
         
         else {
             message.member.roles.remove(mentionedRole)
-                .then(user => message.channel.send(`${user}, vous ne possédez plus le rôle ${mentionedRole}`))
+                .then(user => message.channel.send(`${user} ne posséde plus le rôle ${mentionedRole}`))
                 .catch(err => console.log(err));
         }
     }
@@ -27,7 +27,7 @@ module.exports.help = {
     mentionedArgs : true,
     argsSize : 2,
     aliases: ['rm'],
-    usage: '<role>',
+    usage: '<@role> <@user>',
     cooldown: 10,
     permissions: true,
     isUserAdmin: false

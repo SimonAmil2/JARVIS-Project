@@ -31,16 +31,14 @@ client.on('message', (message) => {
     const commandName = args.shift().toLowerCase();                 // Get the command in a string / ex : user 
     const command = client.commands.get(commandName) || client.commands.find(cmd => cmd.help.aliases && cmd.help.aliases.includes(commandName));
     
+    // check if command exist
     if (!command) return;
     
     const isAgent = !(message.member.roles.cache.size === 1);
     const isAdmin = message.member.permissions.has('ADMINISTRATOR');
     const wrongArgsSize = (command.help.args && (!args.length || (args.length <  command.help.argsSize)));
-    const noMentions = !(message.mentions.users.size || message.mentions.roles.size);
+    const noMentions = !(message.mentions.users.size && message.mentions.roles.size);
     const needMentionedArgs = (command.help.mentionedArgs && noMentions);
-
-    // check if command exist
-    
 
     // Handle args
     if (wrongArgsSize || needMentionedArgs) {

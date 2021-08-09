@@ -11,7 +11,7 @@ module.exports.run = (client, message, args) => {
 
 
 module.exports.help = {
-    aliases: ['removes'],
+    aliases: ['rms'],
     mentionedArgs : true,
     argsSize : 2,
     description: 'Supprimer plusieurs rôles',
@@ -19,5 +19,6 @@ module.exports.help = {
     usage: '<role1> <role2> ...',
     cooldown: 10,
     permissions: true,
+    name: 'removes',
     isUserAdmin: false
 }
