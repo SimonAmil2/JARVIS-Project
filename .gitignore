@@ -357,3 +357,6 @@ MigrationBackup/
 
 # Config
 config.json
+
+# test scripts
+*_test.js

@@ -1,17 +1,22 @@
 module.exports.run = (client, message, args) => {
     // Get role
-    let roleName = args.join(' ');  // Fix role with space
-    let role = message.guild.roles.cache.find(role => role.name === roleName);
+    let mentionedRole = message.mentions.roles.first();
+    let mentionedMember = message.guild.member(message.mentions.users.first());
 
-    if (role) {
-        if (!message.member.roles.cache.has(role.id)) {
-            return message.channel.send(`Vous ne possédez pas le rôle ${role.name} !`);
+    this.removeRole(message,mentionedRole,mentionedMember);
+}
+
+module.exports.removeRole = (message, mentionedRole, mentionedMember) => {
+    if (mentionedMember && mentionedRole) {
+        if (!mentionedMember.roles.cache.has(mentionedRole.id)) {
+            return message.channel.send(`${mentionedMember} ne posséde pas le rôle ${mentionedRole} !`);
         }
-        message.member.roles.remove(role)
-            .then(user => message.channel.send(`Vous ne possédez plus le ${role} ${user}`))
-            .catch(err => console.log(err));
-    } else {
-        message.channel.send("Vous ne pouvez pas enlever un rôle qui n'existe pas!");
+        
+        else {
+            message.member.roles.remove(mentionedRole)
+                .then(user => message.channel.send(`${user} ne posséde plus le rôle ${mentionedRole}`))
+                .catch(err => console.log(err));
+        }
     }
 }
 
@@ -19,9 +24,11 @@ module.exports.help = {
     name: 'remove',
     description: 'Enlever un ou plusieurs rôle',
     args: true,
+    mentionedArgs : true,
+    argsSize : 2,
     aliases: ['rm'],
-    usage: '<role>',
+    usage: '<@role> <@user>',
     cooldown: 10,
-    permissions: false,
+    permissions: true,
     isUserAdmin: false
 }
