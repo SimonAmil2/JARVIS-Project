@@ -360,3 +360,7 @@ config.json
 
 # test scripts
 *_test.js
+
+# package files
+package.json
+package-lock.json
