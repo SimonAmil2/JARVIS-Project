@@ -13,6 +13,6 @@ module.exports.help = {
     description: 'Lister les rôles sur le discord',
     args: false,
     cooldown: 10,
-    permissions: false,
+    permissions: true,
     isUserAdmin: false
 }
