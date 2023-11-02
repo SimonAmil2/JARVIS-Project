@@ -13,7 +13,7 @@ module.exports.removeRole = (message, mentionedRole, mentionedMember) => {
         }
         
         else {
-            message.member.roles.remove(mentionedRole)
+            mentionedMember.roles.remove(mentionedRole)
                 .then(user => message.channel.send(`${user} ne posséde plus le rôle ${mentionedRole}`))
                 .catch(err => console.log(err));
         }

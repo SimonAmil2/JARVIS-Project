@@ -12,16 +12,17 @@ loadCommands(path.join(__dirname, 'commands'), client);                 // Loads
 client.on('ready', () => {
     const botLoggedIn = `${client.user.username} has logged in.`
     const channelBotLog = client.channels.cache.get('776102166842572840');
+    
     const allCommands = client.commands;
     const allSelfCommands = allCommands.filter(cmd => cmd.help.selfcommand && !cmd.help.testcommand);
 
     console.log(botLoggedIn);
-    //channelBotLog.send(botLoggedIn);
+    channelBotLog.send(botLoggedIn);
     
-    // Self commands that need to be init
+    //Self commands that need to be init
 
-    /*channelBotLog.send('Ces commandes ont besoin d\'être intialisées : ')
-    allSelfCommands.forEach(cmd => channelBotLog.send('$'+cmd.help.name));*/
+    channelBotLog.send('Ces commandes ont besoin d\'être intialisées : ')
+    allSelfCommands.forEach(cmd => channelBotLog.send('$'+cmd.help.name));
 });
 
 client.on('message', (message) => {
