@@ -14,7 +14,8 @@ module.exports.run = (client, message, args) => {
 }
 
 module.exports.moveMember = (message, mentionedMember, args) => {
-    let chosenChannelName = args.filter(a => !a.includes('@!'))[0]
+    let chosenChannelName = args.filter(a => !a.includes('#!'))[0]
+    message.channel.send(chosenChannelName);
     let chosenChannel = (chosenChannelName) ? 
                                 message.guild.channels.cache.filter(c => c.type === 'voice').filter(c => c.name.toLowerCase().trim().includes(chosenChannelName.toLowerCase())).first()
                                 : undefined;
