@@ -12,8 +12,9 @@ module.exports.run = (client, message, args) => {
         .setImage('attachment://maos.gif')
         .setTimestamp();
 
-        const mainChannel = client.channels.cache.get('326438580706607106');
-        mainChannel.send(embed);        
+        //const mainChannel = client.channels.cache.get('326438580706607106');
+        //mainChannel.send(embed);    
+        member.user.send(embed);   
     });
 }
 
