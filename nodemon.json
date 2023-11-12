@@ -1,0 +1,8 @@
+{
+  "watch": ["bot.js"],
+  "ext": "js,json",
+  "exec": "node bot.js",
+  "restartable": "rs",  
+  "delay": "2500",    
+  "verbose": true       
+}

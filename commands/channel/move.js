@@ -14,20 +14,19 @@ module.exports.run = (client, message, args) => {
 }
 
 module.exports.moveMember = (message, mentionedMember, args) => {
-    let chosenChannelName = args.filter(a => !a.includes('#!'))[0]
-    message.channel.send(chosenChannelName);
+    let chosenChannelName = args.filter(a => a.includes('#'))[0].replace("#", "").replace("<","").replace(">","")
     let chosenChannel = (chosenChannelName) ? 
-                                message.guild.channels.cache.filter(c => c.type === 'voice').filter(c => c.name.toLowerCase().trim().includes(chosenChannelName.toLowerCase())).first()
+                                message.guild.channels.cache.filter(c => c.type === 'voice').filter(c => c.id.toLowerCase().trim().includes(chosenChannelName.toLowerCase())).first()
                                 : undefined;
     
     if (chosenChannel) {
-        if(chosenChannel.id === mentionedMember.voice.channel.id) {
+        if(mentionedMember.voice.channel && (chosenChannel.id === mentionedMember.voice.channel.id)) {
             message.channel.send(`${mentionedMember} est déjà dans ce channel...`);
         }
 
         else {
             message.channel.send(`${mentionedMember}, je te déplace dans le channel ${chosenChannel} dans 3 secondes...`);
-            mentionedMember.user.send(`Je te déplace dans le channel ${chosenChannel} dans 3 secondes...`);
+            //mentionedMember.user.send(`Je te déplace dans le channel ${chosenChannel} dans 3 secondes...`);
             setTimeout(function(){
                 mentionedMember.voice.setChannel(chosenChannel);
             }, 3000);
@@ -50,5 +49,5 @@ module.exports.help = {
     isUserAdmin: false,
     name: 'move',
     permissions: true,
-    usage: '<@user> <channelid>'
+    usage: '<@user> <#channelid>'
 }
