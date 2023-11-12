@@ -1,7 +1,7 @@
 {
   "name": "discord_js_skeleton",
   "version": "1.0.0",
-  "description": "",
+  "description": "JARVIS M's A.o.S Discord Project",
   "main": "index.js",
   "scripts": {
     "start": "node ./bot.js",
@@ -12,9 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@discordjs/voice": "^0.16.0",
     "axios": "^1.6.0",
     "discord.js": "^12.5.3",
     "dotenv": "^10.0.0",
+    "libsodium-wrappers": "^0.7.13",
     "nodemon": "^3.0.1"
   }
 }
