@@ -33,3 +33,47 @@ module.exports.handleCd = (client, command, args, message) => {
     // Run commands
     command.run(client, message, args);
 }
+
+
+
+module.exports.getMentionnedMembers = (message) => {
+    let mentionedUsers = message.mentions.users;
+    if(mentionedUsers?.size) {
+        return  mentionedUsers.map(u => message.guild.member(u))
+    }
+    else {
+        message.channel.send("Aucun membre mentionné");
+    }
+    
+}
+
+module.exports.moveMember = (message, mentionedMember, args) => {
+    let argsWithTag = args.filter(a => a.includes('#'));
+    let chosenChannelName = (argsWithTag[0]) ? argsWithTag[0].replace("#", "").replace("<","").replace(">","") : undefined;
+    let chosenChannel = (chosenChannelName) ? 
+                                message.guild.channels.cache.filter(c => c.type === 'voice').filter(c => c.id.toLowerCase().trim().includes(chosenChannelName.toLowerCase())).first()
+                                : undefined;
+    
+    if (chosenChannel) {
+        if(mentionedMember.voice.channel) {
+            if(chosenChannel.id === mentionedMember.voice.channel.id) {
+                message.channel.send(`${mentionedMember} est déjà dans ce channel...`);
+            }
+
+            else {
+                message.channel.send(`${mentionedMember}, je te déplace dans le channel ${chosenChannel} dans 10 secondes...`);
+                //mentionedMember.user.send(`Je te déplace dans le channel ${chosenChannel} dans 3 secondes...`);
+                setTimeout(function(){
+                    mentionedMember.voice.setChannel(chosenChannel);
+                }, 10000);
+            }
+        }
+
+        else {
+            message.channel.send(`${mentionedMember.displayName} n'est pas connecté à un channel vocal.`)
+        }
+    }
+    else {
+        message.channel.send(`Tu n'as pas mentionné de channelID.`)
+    }
+}

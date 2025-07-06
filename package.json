@@ -4,8 +4,8 @@
   "description": "JARVIS M's A.o.S Discord Project",
   "main": "index.js",
   "scripts": {
-    "start": "node ./bot.js",
-    "dev": "nodemon ./bot.js",
+    "start": "node ./index.js",
+    "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,7 +14,7 @@
   "dependencies": {
     "@discordjs/voice": "^0.16.0",
     "axios": "^1.6.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.11.0",
     "dotenv": "^10.0.0",
     "libsodium-wrappers": "^0.7.13",
     "nodemon": "^3.0.1"
